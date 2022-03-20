@@ -1,0 +1,78 @@
+.challanges{
+    display: flex;
+    flex-direction: column;
+    padding:  10px;
+}
+.challange1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.getdays{
+    background-color: green;
+    color: white;
+    height: 40;
+    border-radius: 10px;
+}
+.reset{
+    background-color: red;
+    color: white;
+    height: 40;
+    border-radius: 10px;
+}
+.challange2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.cat{
+    background-color: green;
+    color: white;
+    height: 40;
+    border-radius: 10px;
+}
+.row2{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.row2 > img {
+    height: 150px;
+    width: 150px;
+    border-radius: 10px;
+    box-shadow: 1px 3px 15px -3px #000000;
+}
+.challange3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+.container > img {
+    padding: 10px;
+}
+.container>img:hover{
+    box-shadow: 1px 3px 15px -3px blue;
+}
+.challange4{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
