@@ -298,12 +298,12 @@ let data = {
     'wins': 0,
     'draws': 0,
     'losses': 0,
-    'isStand': false,
-    'turnsOver': false
 }
 const You = data["you"];
 const Dealer = data["dealer"];
-const hitSound = new Audio("sounds/swish.m4a")
+const hitSound = new Audio("sounds/swish.m4a");
+const winSound = new Audio("sounds/cash.mp3");
+const lossSound = new Audio("sounds/aww.mp3");
 
 document.querySelector(".hit").addEventListener("click", blackJack);
 document.querySelector(".deal").addEventListener("click", blackJackDeal);
@@ -325,6 +325,9 @@ function blackjackHit(turn, card) {
     }
 }
 function blackJackDeal() {
+    let winner = computeWinner();
+    showResult(winner);
+
     let yourImage = document.querySelector(".your-img").querySelectorAll("img");
     let dealerImage = document.querySelector(".dealer-img").querySelectorAll("img");
     for (let i = 0; i < yourImage.length; i++) {
@@ -360,6 +363,56 @@ function dealerLogic() {
     blackjackHit(Dealer, card);
     updatScore(card, Dealer);
     showScore(Dealer)
+    if (Dealer["score" > 15]) {
+        let winner = computeWinner();
+        showResult(winner);
+    }
+}
+function computeWinner() {
+    let winner;
+    if (You["score"] <= 21) {
+        if ((You["score"] > Dealer["score"]) || (Dealer["score"] > 21)) {
+            winner = You;
+            data['wins']++;
+            console.log("you won");
+        } else if (You["score"] < Dealer["score"]) {
+            winner = Dealer;
+            data['losses']++;
+            console.log("you lost");
+        }
+        else if (You["score"] == Dealer["score"]) {
+            data['draws']++;
+            console.log("you tied");
+        }
+    } else if (You['score'] > 21 && Dealer['score'] <= 21) {
+        winner = Dealer;
+        data['losses']++;
+        console.log("you lost");
+    } else if (You['score'] > 21 && Dealer['score'] > 21) {
+        data['draws']++;
+        console.log("you tied");
+    }
+    return winner;
+}
+function showResult(winner) {
+    let message, messageColor;
+    if (winner === You) {
+        document.querySelector('#wins').textContent = data['wins'];
+        message = 'You won!';
+        messageColor = 'green';
+        winSound.play();
+    } else if (winner === Dealer) {
+        document.querySelector('#losses').textContent = data['losses'];
+        message = 'You lost!';
+        messageColor = 'red';
+        lossSound.play();
+    } else {
+        document.querySelector('#draws').textContent = data['draws'];
+        message = 'You drew!';
+        messageColor = 'black';
+    }
+    document.querySelector('#letsplay').textContent = message;
+    document.querySelector('#letsplay').style.color = messageColor;
 }
 
 // challange 6
