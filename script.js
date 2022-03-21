@@ -209,8 +209,8 @@ function frontEndAnswer(message, userChoice, botChoice) {
     var botDiv = document.createElement("div");
 
     userDiv.innerHTML = `<img src=${imgData[userChoice]} height="100px" width="100px" style="border-radius: 10px;
-    box-shadow: 1px 3px 15px -3px #000000;" >`;
-    botDiv.innerHTML = `<img src=${imgData[botChoice]} height="100px" width="100px" style="border-radius: 10px;
+    box-shadow: 1px 3px 15px -3px #000000; padding: 10px;">`;
+    botDiv.innerHTML = `<img src=${imgData[botChoice]} height="100px" width="100px" style="border-radius: 10px; padding: 10px;
     box-shadow: 1px 3px 15px -3px #000000;">`;
     messageDiv.innerHTML = `<h2 style="color:${message.color}">${message.message}</h2>`;
 
@@ -220,9 +220,164 @@ function frontEndAnswer(message, userChoice, botChoice) {
 }
 
 // challange 4
+var allButtons = document.getElementsByTagName("button");
+var copyButtons = [];
+for (let i = 0; i < allButtons.length; i++) {
+    copyButtons.push(allButtons[i].classList[1]);
+}
+function buttoncolor(clickedButton) {
+    if (clickedButton.value === "red") {
+        buttonRed();
+    }
+    else if (clickedButton.value === "yellow") {
+        buttonYellow();
+    }
+    else if (clickedButton.value === "blue") {
+        buttonBlue();
+    }
+    else if (clickedButton.value === "green") {
+        buttonGreen();
+    }
+    else if (clickedButton.value === "random") {
+        buttonRandom();
+    }
+    else if (clickedButton.value === "reset") {
+        buttonReset();
+    }
+}
+function buttonRed() {
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add("red");
+    }
+}
+function buttonYellow() {
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add("yellow");
+    }
+}
+function buttonGreen() {
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add("green");
+    }
+}
+function buttonBlue() {
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add("blue");
+    }
+}
+function buttonRandom() {
+    var data = ["red", "green", "yellow", "blue"]
+    for (let i = 1; i <= allButtons.length; i++) {
+        var random = Math.floor(Math.random() * 4);
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add(data[random]);
+    }
+}
+function buttonReset() {
+    for (let i = 1; i <= allButtons.length; i++) {
+        allButtons[i].classList.remove(allButtons[i].classList[1]);
+        allButtons[i].classList.add(copyButtons[i]);
+    }
+}
 
+// challange 5
+let data = {
+    "you": { "scoreSpan": "#your-score", "div": ".your-img", "score": 0 },
+    "dealer": { "scoreSpan": "#dealer-score", "div": ".dealer-img", "score": 0 },
+    'cards': ['2S', '3S', '4S', '5S', '6S', '7S', '8S', '9S', '10S', 'JS', 'QS', 'KS', 'AS'],
+    'cardsMap': { '2S': 2, '3S': 3, '4S': 4, '5S': 5, '6S': 6, '7S': 7, '8S': 8, '9S': 9, '10S': 10, 'JS': 11, 'QS': 12, 'KS': 13, 'AS': 14 },
+    'sounds': {
+        'hit': new Audio('sounds/swish.m4a'),
+        'win': new Audio('sounds/cash.mp3'),
+        'losse': new Audio('sounds/aww.mp3')
+    },
+    'wins': 0,
+    'draws': 0,
+    'losses': 0,
+    'isStand': false,
+    'turnsOver': false
+}
+const You = data["you"];
+const Dealer = data["dealer"];
+const hitSound = new Audio("sounds/swish.m4a")
 
+document.querySelector(".hit").addEventListener("click", blackJack);
+document.querySelector(".deal").addEventListener("click", blackJackDeal);
+document.querySelector(".stand").addEventListener("click", dealerLogic);
 
+function blackJack() {
+    let card = randomCard();
+    blackjackHit(You, card);
+    updatScore(card, You);
+    showScore(You)
+}
+function blackjackHit(turn, card) {
+    if (turn['score'] <= 21) {
+        let cardImage = document.createElement("img");
+        cardImage.src = `img/Cards/${card}.jpg`;
+        cardImage.setAttribute("style", "height:100px;border-radius:10px")
+        document.querySelector(turn["div"]).appendChild(cardImage);
+        hitSound.play()
+    }
+}
+function blackJackDeal() {
+    let yourImage = document.querySelector(".your-img").querySelectorAll("img");
+    let dealerImage = document.querySelector(".dealer-img").querySelectorAll("img");
+    for (let i = 0; i < yourImage.length; i++) {
+        yourImage[i].remove();
+    }
+    for (let i = 0; i < dealerImage.length; i++) {
+        dealerImage[i].remove();
+    }
+    You["score"] = 0;
+    Dealer["score"] = 0;
+    document.querySelector("#your-score").textContent = 0;
+    document.querySelector("#your-score").style.color = "white";
+    document.querySelector("#dealer-score").textContent = 0;
+    document.querySelector("#dealer-score").style.color = "white";
+}
+function randomCard() {
+    let number = [Math.floor(Math.random() * 13)];
+    return data["cards"][number];
+}
+function updatScore(card, activeplayer) {
+    activeplayer["score"] += data["cardsMap"][card];
+}
+function showScore(activeplayer) {
+    if (activeplayer['score'] > 21) {
+        document.querySelector(activeplayer['scoreSpan']).textContent = "BUST!";
+        document.querySelector(activeplayer['scoreSpan']).style.color = "red";
+    } else {
+        document.querySelector(activeplayer['scoreSpan']).textContent = activeplayer['score'];
+    }
+}
+function dealerLogic() {
+    let card = randomCard();
+    blackjackHit(Dealer, card);
+    updatScore(card, Dealer);
+    showScore(Dealer)
+}
+
+// challange 6
+const url = "https://randomuser.me/api/?results=10";
+fetch(url).then(res => res.json()).then(data => {
+    let users = data.results;
+    // console.log(users)
+    for (let i = 0; i <= users.length; i++) {
+        var div = document.createElement("div");
+        var image = document.createElement("img");
+        let p = document.createElement("p");
+        p.append(document.createTextNode(`${users[i].name.title} ${users[i].name.first} ${users[i].name.last}`));
+        image.src = users[i].picture.large;
+        div.appendChild(image);
+        div.appendChild(p);
+        document.getElementById("showUsers").appendChild(div);
+    }
+})
 
 
 

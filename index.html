@@ -15,8 +15,8 @@
         <div class="challange1">
             <h2>Challenge 1 : Get your age in Days</h2>
             <div class="row">
-                <button class="getdays" onclick="getdays()">Get Days</button>
-                <button class="reset" onclick="reset()">Reset</button>
+                <button class="getdays green" onclick="getdays()">Get Days</button>
+                <button class="reset red" onclick="reset()">Reset</button>
             </div>
             <div id="showdays"></div>
         </div>
@@ -24,7 +24,7 @@
         <!-- challange 2 -->
         <div class="challange2">
             <h2>Challenge 2 : Cat Generator</h2>
-            <button class="cat" onclick="createcat()">Generate Cat</button>
+            <button class="cat green" onclick="createcat()">Generate Cat</button>
             <div class="row2" id="showcats">
                 <!-- <img src="https://thecatapi.com/api/images/get?format=src&type=gif&size=small" alt=""> -->
             </div>
@@ -38,15 +38,78 @@
                     width="100px" onclick="rpsGame(this)" />
                 <img src="https://pngimg.com/uploads/paper_sheet/paper_sheet_PNG7250.png" alt="" id="paper"
                     height="100px" width="100px" onclick="rpsGame(this)" />
-                <img src="https://cdn.onlinewebfonts.com/svg/img_19326.png" alt="" id="scissor" height="100px"
-                    width="100px" onclick="rpsGame(this)" />
+                <img src="https://purepng.com/public/uploads/large/purepng.com-scissorsscissorsshearing-toolmetal-bladessnipclip-1701527916150pl4zn.png"
+                    alt="" id="scissor" height="100px" width="100px" onclick="rpsGame(this)" />
             </div>
         </div>
 
         <!-- challenge 4 -->
         <div class="challange4">
             <h2>Challenge 4 : Change the color of the Buttons</h2>
+            <div class="box">
+                <form action="">
+                    <select name="backdrop" id="background" onchange="buttoncolor(this)">
+                        <option value="random">random</option>
+                        <option value="red">red</option>
+                        <option value="blue">blue</option>
+                        <option value="yellow">yellow</option>
+                        <option value="green">green</option>
+                        <option value="reset">reset</option>
+                    </select>
+                </form>
+                <button class="dummy red">weee!!!</button>
+                <button class="dummy blue">hiii!!!</button>
+                <button class="dummy green">hello!!!</button>
+                <button class="dummy yellow">nice!!!</button>
+            </div>
+        </div>
 
+        <!-- challenge 5 -->
+        <div class="challange5">
+            <h2>Challenge 5 : Blackjack</h2>
+            <h4 id="letsplay">Let's Play</h4>
+            <div class="bg">
+                <div class="gameBox">
+                    <div id="your-box">
+                        <h2 style="color: white;">You: <span id="your-score">0</span></h2>
+                        <div class="your-img">
+                        </div>
+                    </div>
+                    <div id="dealer-box">
+                        <h2 style="color: white;">Dealer: <span id="dealer-score">0</span></h2>
+                        <div class="dealer-img">
+                        </div>
+                    </div>
+                </div>
+                <div class="gamebtn">
+                    <div>
+                        <button id="hit" class="hit green">Hit</button>
+                        <button id="stand" class="stand blue">Stand</button>
+                        <button id="deal" class="deal red">Deal</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table">
+                <table style="border: 1px solid black;">
+                    <tr>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Draws</th>
+                    </tr>
+                    <tr>
+                        <th id="wins">0</th>
+                        <th id="looses">0</th>
+                        <th id="draws">0</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- challenge 6 -->
+        <div class="challange6">
+            <h2>Challenge 6 : AJAX API's with Javascript</h2>
+            <div class="userPics" id="showUsers">
+            </div>
         </div>
     </div>
     </div>
